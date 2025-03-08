@@ -1,3 +1,8 @@
+---
+description: project setup
+globs: 
+alwaysApply: true
+---
 # Mekane Share Project Rules
 
 ## Project Structure
