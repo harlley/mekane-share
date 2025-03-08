@@ -11,6 +11,12 @@ This is a monorepo managed with Turborepo containing:
 - apps/backend: Backend service (TypeScript/Hono)
 - packages/shared: Shared utilities and types
 
+## Package management
+npm
+
+## Node version
+v23.6.0
+
 ## Technology Stack
 tech_stack:
   frontend: "React, TypeScript, WXT (Chrome Extension)"
