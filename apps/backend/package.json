@@ -1,11 +1,15 @@
 {
-  "name": "backend",
+  "name": "@mekane-share/backend",
+  "version": "0.0.0",
+  "private": true,
   "scripts": {
     "dev": "wrangler dev",
+    "build": "wrangler build",
     "deploy": "wrangler deploy --minify"
   },
   "dependencies": {
-    "hono": "^4.7.4"
+    "hono": "^4.7.4",
+    "@mekane-share/shared": "*"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20250214.0",
