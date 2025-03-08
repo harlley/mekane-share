@@ -74,3 +74,5 @@ This document details the technical implementation of Mekane Share, a Chrome ext
 - **Unit Tests:** Jest for React and backend TypeScript (with `@hono/test` for Hono).
 - **Integration Tests:** Playwright to simulate capture and upload.
 - **Performance:** Measure capture + URL generation time (<2s).
+## 8. Useful Links
+- [Elem Snap](https://elemsnap.com/) - A reference resource for screenshot sharing solutions.
