@@ -7,9 +7,10 @@ This is a monorepo managed with Turborepo containing:
 - packages/shared: Shared utilities and types
 
 ## Technology Stack
-- Frontend: React, TypeScript, WXT (Chrome Extension)
-- Backend: Node.js, TypeScript, Hono
-- Build System: Turborepo, Vite
+tech_stack:
+  frontend: "React, TypeScript, WXT (Chrome Extension)"
+  backend: "Node.js, TypeScript, Hono"
+  build: "Turborepo, Vite"
 
 ## Key Files and Directories
 important_files:
@@ -29,10 +30,16 @@ important_files:
       description: "API endpoints"
 
 ## Code Conventions
-- Use TypeScript for all new code
-- React components should be functional with hooks
-- Backend uses Hono for routing and middleware
-- Follow existing file structure in respective directories
+code_conventions:
+  - rule: "Use TypeScript for all new code"
+  - rule: "React components should be functional with hooks"
+  - rule: "Backend uses Hono for routing and middleware"
+  - rule: "Follow existing file structure in respective directories"
+
+## Version Control Rules
+version_control:
+  - rule: "Never commit and push without explicit user request"
+  - rule: "Always wait for user confirmation before any git operations"
 
 ## API Endpoints
 endpoints:
@@ -44,10 +51,16 @@ endpoints:
     description: "Health check endpoint"
 
 ## Important Context
-- Screenshot retention: 1 week by default
-- Environment variables needed: PORT, STORAGE_PATH, HTTPS_CERT, HTTPS_KEY
-- Extension requires HTTPS for backend communication
-- Performance target: <2s for capture + URL generation
+context:
+  retention: "1 week by default"
+  env_vars:
+    - "PORT"
+    - "STORAGE_PATH"
+    - "HTTPS_CERT"
+    - "HTTPS_KEY"
+  requirements:
+    - "Extension requires HTTPS for backend communication"
+    - "Performance target: <2s for capture + URL generation"
 
 ## Testing
 testing_framework:
