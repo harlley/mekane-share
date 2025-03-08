@@ -1,10 +1,15 @@
 {
   "private": true,
+  "engines": {
+    "node": ">=23.6.0",
+    "npm": ">=11.0.0"
+  },
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
     "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "postinstall": "[ -f \"$NVM_DIR/nvm.sh\" ] && . \"$NVM_DIR/nvm.sh\" && nvm use || echo \"nvm not found\""
   },
   "devDependencies": {
     "turbo": "latest",
@@ -14,5 +19,5 @@
     "apps/*",
     "packages/*"
   ],
-  "packageManager": "npm@10.2.4"
+  "packageManager": "npm@11.2.0"
 }
