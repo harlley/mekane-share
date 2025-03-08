@@ -1,0 +1,73 @@
+# Mekane Share Project Rules
+
+## Project Structure
+This is a monorepo managed with Turborepo containing:
+- apps/extension: Chrome extension (React/WXT/TypeScript)
+- apps/backend: Backend service (TypeScript/Hono)
+- packages/shared: Shared utilities and types
+
+## Technology Stack
+- Frontend: React, TypeScript, WXT (Chrome Extension)
+- Backend: Node.js, TypeScript, Hono
+- Build System: Turborepo, Vite
+
+## Key Files and Directories
+important_files:
+  extension:
+    - path: "apps/extension/entrypoints/content.tsx"
+      description: "React overlay for capture/annotations"
+    - path: "apps/extension/entrypoints/background.ts"
+      description: "Screenshot capture logic"
+    - path: "apps/extension/entrypoints/popup.tsx"
+      description: "Settings panel"
+    - path: "apps/extension/manifest.json"
+      description: "Extension manifest"
+  backend:
+    - path: "apps/backend/**/*.ts"
+      description: "Backend service files"
+    - path: "apps/backend/src/routes/*.ts"
+      description: "API endpoints"
+
+## Code Conventions
+- Use TypeScript for all new code
+- React components should be functional with hooks
+- Backend uses Hono for routing and middleware
+- Follow existing file structure in respective directories
+
+## API Endpoints
+endpoints:
+  - path: "/upload"
+    method: "POST"
+    description: "Upload and store screenshots"
+  - path: "/health"
+    method: "GET"
+    description: "Health check endpoint"
+
+## Important Context
+- Screenshot retention: 1 week by default
+- Environment variables needed: PORT, STORAGE_PATH, HTTPS_CERT, HTTPS_KEY
+- Extension requires HTTPS for backend communication
+- Performance target: <2s for capture + URL generation
+
+## Testing
+testing_framework:
+  unit: "Jest for both frontend and backend"
+  integration: "Playwright"
+  convention: "Test files should be co-located with source files"
+
+## Dependencies
+dependencies:
+  extension:
+    - react
+    - react-dom
+    - wxt
+    - webextension-polyfill
+  backend:
+    - hono
+    - sharp
+
+## Build Commands
+commands:
+  development: "turbo run dev --filter=extension"
+  production: "turbo run build --filter=extension"
+  backend: "turbo run start --filter=backend" 
