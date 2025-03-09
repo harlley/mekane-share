@@ -1,35 +1,52 @@
-import { useState } from 'react';
-import reactLogo from '@/assets/react.svg';
-import wxtLogo from '/wxt.svg';
-import './App.css';
+import React from "react";
+import browser from "webextension-polyfill";
+import "./App.css";
 
-function App() {
-  const [count, setCount] = useState(0);
+const App: React.FC = () => {
+  const handleCaptureClick = async () => {
+    // Close the popup
+    window.close();
+
+    try {
+      // Send message to background script to start the capture process
+      const tabs = await browser.tabs.query({
+        active: true,
+        currentWindow: true,
+      });
+      const activeTab = tabs[0];
+
+      if (activeTab.id) {
+        await browser.tabs.sendMessage(activeTab.id, {
+          action: "START_SELECTION",
+        });
+      }
+    } catch (error) {
+      console.error("Error initiating screen capture:", error);
+    }
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://wxt.dev" target="_blank">
-          <img src={wxtLogo} className="logo" alt="WXT logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>WXT + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+    <div className="app-container">
+      <header>
+        <h1>Mekane Share</h1>
+        <p>Capture and share screenshots</p>
+      </header>
+
+      <main>
+        <button className="capture-button" onClick={handleCaptureClick}>
+          Capture Screenshot
         </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the WXT and React logos to learn more
-      </p>
-    </>
+
+        <div className="instruction">
+          <p>Click the button above to select an area to capture</p>
+        </div>
+      </main>
+
+      <footer>
+        <p>Mekane Share v1.0</p>
+      </footer>
+    </div>
   );
-}
+};
 
 export default App;
