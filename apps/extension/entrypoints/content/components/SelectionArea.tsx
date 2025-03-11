@@ -3,19 +3,19 @@ import { SelectionArea as SelectionAreaType } from '../../shared/types';
 
 interface SelectionAreaProps {
   area: SelectionAreaType | null;
-  _isSelecting: boolean;
-  onSelectionComplete: (area: SelectionAreaType) => void;
+  isSelecting: boolean;
+  onSelectionComplete?: (area: SelectionAreaType) => void;
 }
 
 export const SelectionArea: React.FC<SelectionAreaProps> = ({
   area,
-  _isSelecting,
+  isSelecting: _isSelecting,
   onSelectionComplete,
 }) => {
   if (!area) return null;
 
   const handleClick = () => {
-    onSelectionComplete(area);
+    onSelectionComplete?.(area);
   };
 
   return (

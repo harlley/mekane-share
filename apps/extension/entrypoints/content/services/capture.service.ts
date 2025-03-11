@@ -15,6 +15,10 @@ export const captureVisibleTab = async (
   try {
     const tab = await getActiveTab();
 
+    if (!tab.id) {
+      throw new CaptureError('No active tab ID found');
+    }
+
     // Hide the selection area before capture
     await executeInTab(tab.id, () => {
       const overlayContainer = document.getElementById(
@@ -36,6 +40,10 @@ export const captureVisibleTab = async (
     const dataUrl = await browser.tabs.captureVisibleTab(undefined, options);
 
     // Show the selection area again
+    if (!tab.id) {
+      throw new CaptureError('No active tab ID found');
+    }
+
     await executeInTab(tab.id, () => {
       const overlayContainer = document.getElementById(
         'mekane-selection-overlay-container'

@@ -1,4 +1,4 @@
-name: Lint
+name: Code Quality
 
 on:
   push:
@@ -11,8 +11,8 @@ on:
       - master
 
 jobs:
-  lint:
-    name: Run ESLint
+  quality:
+    name: Lint and Type Check
     runs-on: ubuntu-latest
 
     steps:
@@ -22,8 +22,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "23.6.0"
-          cache: "npm"
+          node-version: '23.6.0'
+          cache: 'npm'
 
       - name: Update npm
         run: npm install -g npm@latest
@@ -33,4 +33,9 @@ jobs:
           rm -rf node_modules
           rm -f package-lock.json
           npm install
-          npm run lint
+
+      - name: Run ESLint
+        run: npm run lint
+
+      - name: Run Type Check
+        run: npm run typecheck

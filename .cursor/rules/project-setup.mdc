@@ -53,6 +53,10 @@ version_control:
   - rule: "Never commit and push without explicit user request"
   - rule: "Always wait for user confirmation before any git operations"
   - rule: "Run linting before commits to ensure code quality"
+  - rule: "Always run 'git status' before committing to ensure all relevant files are included"
+  - rule: "Review changes in each file before adding to staging"
+  - rule: "Use 'git reset --soft' instead of '--hard' when undoing commits to preserve working directory changes"
+  - rule: "If you need to undo commits, prefer 'git reset --soft HEAD~1' to avoid losing files"
 
 ## API Endpoints
 endpoints:
