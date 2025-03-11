@@ -1,5 +1,5 @@
-import { SelectionArea } from "../types";
-import browser from "webextension-polyfill";
+import { SelectionArea } from '../types';
+import browser from 'webextension-polyfill';
 
 /**
  * Captures a screenshot of the visible tab
@@ -7,7 +7,7 @@ import browser from "webextension-polyfill";
  */
 export const captureVisibleTab = async (): Promise<string> => {
   try {
-    console.log("[Mekane-Screenshot] Starting capture");
+    console.log('[Mekane-Screenshot] Starting capture');
 
     // First get the current active tab
     const tabs = await browser.tabs.query({
@@ -15,10 +15,10 @@ export const captureVisibleTab = async (): Promise<string> => {
       currentWindow: true,
     });
 
-    console.log("[Mekane-Screenshot] Found active tab:", tabs[0]?.id);
+    console.log('[Mekane-Screenshot] Found active tab:', tabs[0]?.id);
 
     if (!tabs[0]?.id) {
-      throw new Error("No active tab found");
+      throw new Error('No active tab found');
     }
 
     // Hide the selection area before capture
@@ -26,13 +26,13 @@ export const captureVisibleTab = async (): Promise<string> => {
       target: { tabId: tabs[0].id },
       func: () => {
         const overlayContainer = document.getElementById(
-          "mekane-selection-overlay-container"
+          'mekane-selection-overlay-container'
         );
         if (overlayContainer?.shadowRoot) {
           const selectionArea =
-            overlayContainer.shadowRoot.querySelector(".selection-area");
+            overlayContainer.shadowRoot.querySelector('.selection-area');
           if (selectionArea instanceof HTMLElement) {
-            selectionArea.style.display = "none";
+            selectionArea.style.display = 'none';
           }
         }
       },
@@ -42,9 +42,9 @@ export const captureVisibleTab = async (): Promise<string> => {
     await new Promise((resolve) => setTimeout(resolve, 100));
 
     // Capture the screenshot
-    console.log("[Mekane-Screenshot] Capturing tab");
+    console.log('[Mekane-Screenshot] Capturing tab');
     const dataUrl = await browser.tabs.captureVisibleTab(undefined, {
-      format: "png",
+      format: 'png',
     });
 
     // Show the selection area again
@@ -52,24 +52,24 @@ export const captureVisibleTab = async (): Promise<string> => {
       target: { tabId: tabs[0].id },
       func: () => {
         const overlayContainer = document.getElementById(
-          "mekane-selection-overlay-container"
+          'mekane-selection-overlay-container'
         );
         if (overlayContainer?.shadowRoot) {
           const selectionArea =
-            overlayContainer.shadowRoot.querySelector(".selection-area");
+            overlayContainer.shadowRoot.querySelector('.selection-area');
           if (selectionArea instanceof HTMLElement) {
-            selectionArea.style.display = "";
+            selectionArea.style.display = '';
           }
         }
       },
     });
 
-    console.log("[Mekane-Screenshot] Capture successful");
+    console.log('[Mekane-Screenshot] Capture successful');
     return dataUrl;
   } catch (error) {
-    console.error("[Mekane-Screenshot] Error capturing screenshot:", error);
+    console.error('[Mekane-Screenshot] Error capturing screenshot:', error);
     if (error instanceof Error) {
-      console.error("[Mekane-Screenshot] Error details:", {
+      console.error('[Mekane-Screenshot] Error details:', {
         message: error.message,
         stack: error.stack,
       });
@@ -117,7 +117,7 @@ const getDevicePixelRatio = async (): Promise<number> => {
       active: true,
       currentWindow: true,
     });
-    if (!tab.id) throw new Error("No active tab found");
+    if (!tab.id) throw new Error('No active tab found');
 
     const results = await browser.scripting.executeScript({
       target: { tabId: tab.id },
@@ -127,10 +127,10 @@ const getDevicePixelRatio = async (): Promise<number> => {
     });
 
     const dpr = results[0]?.result;
-    return typeof dpr === "number" ? dpr : 1;
+    return typeof dpr === 'number' ? dpr : 1;
   } catch (error) {
     console.warn(
-      "[Mekane-Screenshot] Error getting device pixel ratio:",
+      '[Mekane-Screenshot] Error getting device pixel ratio:',
       error
     );
     return 1;
@@ -147,20 +147,20 @@ export const cropScreenshot = async (
   screenshotUrl: string,
   area: SelectionArea
 ): Promise<string> => {
-  console.log("[Mekane-Screenshot] Starting crop");
-  console.log("[Mekane-Screenshot] Area:", area);
+  console.log('[Mekane-Screenshot] Starting crop');
+  console.log('[Mekane-Screenshot] Area:', area);
 
   try {
     // Get the device pixel ratio
     const dpr = await getDevicePixelRatio();
-    console.log("[Mekane-Screenshot] Device pixel ratio:", dpr);
+    console.log('[Mekane-Screenshot] Device pixel ratio:', dpr);
 
     // Convert data URL to blob
     const blob = await dataURLtoBlob(screenshotUrl);
 
     // Create ImageBitmap from blob
     const imageBitmap = await createImageBitmap(blob);
-    console.log("[Mekane-Screenshot] Image loaded, dimensions:", {
+    console.log('[Mekane-Screenshot] Image loaded, dimensions:', {
       width: imageBitmap.width,
       height: imageBitmap.height,
       dpr,
@@ -172,7 +172,7 @@ export const cropScreenshot = async (
     const width = Math.round(area.width * dpr);
     const height = Math.round(area.height * dpr);
 
-    console.log("[Mekane-Screenshot] Crop dimensions:", {
+    console.log('[Mekane-Screenshot] Crop dimensions:', {
       left,
       top,
       width,
@@ -182,10 +182,10 @@ export const cropScreenshot = async (
 
     // Create canvas with the target dimensions (using non-scaled dimensions)
     const canvas = createOffscreenCanvas(area.width, area.height);
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext('2d');
 
     if (!ctx) {
-      throw new Error("Could not get canvas context");
+      throw new Error('Could not get canvas context');
     }
 
     // Draw the cropped area
@@ -202,17 +202,17 @@ export const cropScreenshot = async (
     );
 
     // Convert canvas to blob
-    const croppedBlob = await canvas.convertToBlob({ type: "image/png" });
+    const croppedBlob = await canvas.convertToBlob({ type: 'image/png' });
 
     // Convert blob to data URL
     const croppedDataUrl = await blobToDataURL(croppedBlob);
 
-    console.log("[Mekane-Screenshot] Crop successful");
+    console.log('[Mekane-Screenshot] Crop successful');
     return croppedDataUrl;
   } catch (error) {
-    console.error("[Mekane-Screenshot] Error cropping screenshot:", error);
+    console.error('[Mekane-Screenshot] Error cropping screenshot:', error);
     if (error instanceof Error) {
-      console.error("[Mekane-Screenshot] Error details:", {
+      console.error('[Mekane-Screenshot] Error details:', {
         message: error.message,
         stack: error.stack,
       });
@@ -229,13 +229,13 @@ export const openScreenshotInNewTab = async (
   dataUrl: string
 ): Promise<void> => {
   try {
-    console.log("[Mekane-Screenshot] Opening screenshot in new tab");
+    console.log('[Mekane-Screenshot] Opening screenshot in new tab');
     await browser.tabs.create({
       url: dataUrl,
     });
-    console.log("[Mekane-Screenshot] Tab created successfully");
+    console.log('[Mekane-Screenshot] Tab created successfully');
   } catch (error) {
-    console.error("[Mekane-Screenshot] Error opening screenshot:", error);
+    console.error('[Mekane-Screenshot] Error opening screenshot:', error);
     throw error;
   }
 };

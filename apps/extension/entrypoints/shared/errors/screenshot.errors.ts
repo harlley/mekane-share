@@ -5,27 +5,27 @@ export class ScreenshotError extends Error {
     public details?: unknown
   ) {
     super(message);
-    this.name = "ScreenshotError";
+    this.name = 'ScreenshotError';
   }
 }
 
 export class CaptureError extends ScreenshotError {
   constructor(message: string, details?: unknown) {
-    super(message, "CAPTURE_ERROR", details);
-    this.name = "CaptureError";
+    super(message, 'CAPTURE_ERROR', details);
+    this.name = 'CaptureError';
   }
 }
 
 export class CropError extends ScreenshotError {
   constructor(message: string, details?: unknown) {
-    super(message, "CROP_ERROR", details);
-    this.name = "CropError";
+    super(message, 'CROP_ERROR', details);
+    this.name = 'CropError';
   }
 }
 
 export class TabError extends ScreenshotError {
   constructor(message: string, details?: unknown) {
-    super(message, "TAB_ERROR", details);
-    this.name = "TabError";
+    super(message, 'TAB_ERROR', details);
+    this.name = 'TabError';
   }
 }

@@ -1,5 +1,5 @@
-import React from "react";
-import { SelectionAreaProps } from "../../shared/types/components.types";
+import React from 'react';
+import { SelectionAreaProps } from '../../shared/types/components.types';
 
 export const SelectionArea: React.FC<SelectionAreaProps> = ({
   area,
@@ -11,7 +11,7 @@ export const SelectionArea: React.FC<SelectionAreaProps> = ({
     <div
       className="selection-area"
       style={{
-        position: "fixed",
+        position: 'fixed',
         left: `${area.x}px`,
         top: `${area.y}px`,
         width: `${area.width}px`,

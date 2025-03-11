@@ -1,6 +1,6 @@
-import React from "react";
-import browser from "webextension-polyfill";
-import "./App.css";
+import React from 'react';
+import browser from 'webextension-polyfill';
+import './App.css';
 
 const App: React.FC = () => {
   const handleCaptureClick = async () => {
@@ -17,11 +17,11 @@ const App: React.FC = () => {
 
       if (activeTab.id) {
         await browser.tabs.sendMessage(activeTab.id, {
-          action: "START_SELECTION",
+          action: 'START_SELECTION',
         });
       }
     } catch (error) {
-      console.error("Error initiating screen capture:", error);
+      console.error('Error initiating screen capture:', error);
     }
   };
 

@@ -2,10 +2,12 @@
   "name": "@mekane-share/backend",
   "version": "0.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "wrangler dev",
     "build": "wrangler build",
-    "deploy": "wrangler deploy --minify"
+    "deploy": "wrangler deploy --minify",
+    "lint": "eslint ."
   },
   "dependencies": {
     "hono": "^4.7.4",
@@ -13,6 +15,8 @@
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20250214.0",
-    "wrangler": "^3.109.2"
+    "wrangler": "^3.109.2",
+    "eslint": "^8.57.0",
+    "eslint-config-custom": "*"
   }
 }

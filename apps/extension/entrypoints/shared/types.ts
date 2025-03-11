@@ -6,7 +6,7 @@ export interface SelectionArea {
 }
 
 export interface CaptureMessage {
-  type: "CAPTURE_SCREENSHOT";
+  type: 'CAPTURE_SCREENSHOT';
   area: SelectionArea;
 }
 

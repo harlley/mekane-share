@@ -1,16 +1,16 @@
-import browser from "webextension-polyfill";
-import { SelectionArea } from "../../shared/types";
-import { CaptureError, CropError } from "../../shared/errors/screenshot.errors";
-import { getActiveTab, executeInTab, getDevicePixelRatio } from "./tab.service";
+import browser from 'webextension-polyfill';
+import { SelectionArea } from '../../shared/types';
+import { CaptureError, CropError } from '../../shared/errors/screenshot.errors';
+import { getActiveTab, executeInTab, getDevicePixelRatio } from './tab.service';
 import {
   blobToDataURL,
   createOffscreenCanvas,
   dataURLtoBlob,
-} from "./image.service";
-import { CaptureOptions } from "../../shared/types/screenshot.types";
+} from './image.service';
+import { CaptureOptions } from '../../shared/types/screenshot.types';
 
 export const captureVisibleTab = async (
-  options: CaptureOptions = { format: "png" }
+  options: CaptureOptions = { format: 'png' }
 ): Promise<string> => {
   try {
     const tab = await getActiveTab();
@@ -18,13 +18,13 @@ export const captureVisibleTab = async (
     // Hide the selection area before capture
     await executeInTab(tab.id, () => {
       const overlayContainer = document.getElementById(
-        "mekane-selection-overlay-container"
+        'mekane-selection-overlay-container'
       );
       if (overlayContainer?.shadowRoot) {
         const selectionArea =
-          overlayContainer.shadowRoot.querySelector(".selection-area");
+          overlayContainer.shadowRoot.querySelector('.selection-area');
         if (selectionArea instanceof HTMLElement) {
-          selectionArea.style.display = "none";
+          selectionArea.style.display = 'none';
         }
       }
     });
@@ -38,20 +38,20 @@ export const captureVisibleTab = async (
     // Show the selection area again
     await executeInTab(tab.id, () => {
       const overlayContainer = document.getElementById(
-        "mekane-selection-overlay-container"
+        'mekane-selection-overlay-container'
       );
       if (overlayContainer?.shadowRoot) {
         const selectionArea =
-          overlayContainer.shadowRoot.querySelector(".selection-area");
+          overlayContainer.shadowRoot.querySelector('.selection-area');
         if (selectionArea instanceof HTMLElement) {
-          selectionArea.style.display = "";
+          selectionArea.style.display = '';
         }
       }
     });
 
     return dataUrl;
   } catch (error) {
-    throw new CaptureError("Failed to capture screenshot", error);
+    throw new CaptureError('Failed to capture screenshot', error);
   }
 };
 
@@ -77,10 +77,10 @@ export const cropScreenshot = async (
 
     // Create canvas with the target dimensions (using non-scaled dimensions)
     const canvas = createOffscreenCanvas(area.width, area.height);
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext('2d');
 
     if (!ctx) {
-      throw new CropError("Could not get canvas context");
+      throw new CropError('Could not get canvas context');
     }
 
     // Draw the cropped area
@@ -97,12 +97,12 @@ export const cropScreenshot = async (
     );
 
     // Convert canvas to blob
-    const croppedBlob = await canvas.convertToBlob({ type: "image/png" });
+    const croppedBlob = await canvas.convertToBlob({ type: 'image/png' });
 
     // Convert blob to data URL
     return await blobToDataURL(croppedBlob);
   } catch (error) {
-    throw new CropError("Failed to crop screenshot", error);
+    throw new CropError('Failed to crop screenshot', error);
   }
 };
 
@@ -112,6 +112,6 @@ export const openScreenshotInNewTab = async (
   try {
     await browser.tabs.create({ url: dataUrl });
   } catch (error) {
-    throw new CaptureError("Failed to open screenshot in new tab", error);
+    throw new CaptureError('Failed to open screenshot in new tab', error);
   }
 };

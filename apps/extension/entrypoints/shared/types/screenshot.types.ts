@@ -1,7 +1,7 @@
-import { SelectionArea } from "../types";
+import { SelectionArea } from '../types';
 
 export interface CaptureOptions {
-  format: "png" | "jpeg";
+  format: 'png' | 'jpeg';
   quality?: number;
 }
 
@@ -16,4 +16,4 @@ export interface CaptureResult {
   timestamp: number;
 }
 
-export type CaptureStatus = "idle" | "selecting" | "capturing" | "error";
+export type CaptureStatus = 'idle' | 'selecting' | 'capturing' | 'error';

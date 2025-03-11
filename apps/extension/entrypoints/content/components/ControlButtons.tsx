@@ -1,5 +1,5 @@
-import React from "react";
-import { ControlButtonsProps } from "../../shared/types/components.types";
+import React from 'react';
+import { ControlButtonsProps } from '../../shared/types/components.types';
 
 export const ControlButtons: React.FC<ControlButtonsProps> = ({
   onCapture,

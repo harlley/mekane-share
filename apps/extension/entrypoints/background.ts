@@ -1,26 +1,26 @@
-import { defineBackground } from "wxt/sandbox";
-import browser from "webextension-polyfill";
-import { CaptureMessage } from "./shared/types";
+import { defineBackground } from 'wxt/sandbox';
+import browser from 'webextension-polyfill';
+import { CaptureMessage } from './shared/types';
 import {
   captureVisibleTab,
   cropScreenshot,
   openScreenshotInNewTab,
-} from "./content/services/capture.service";
-import { CaptureError } from "./shared/errors/screenshot.errors";
+} from './content/services/capture.service';
+import { CaptureError } from './shared/errors/screenshot.errors';
 
 export default defineBackground({
   main() {
     // Function to handle messages
     const messageHandler = async (message: unknown): Promise<boolean> => {
-      if (!message || typeof message !== "object") {
-        throw new CaptureError("Invalid message format");
+      if (!message || typeof message !== 'object') {
+        throw new CaptureError('Invalid message format');
       }
 
       // Handle screenshot capture request
       if (
-        "type" in message &&
-        message.type === "CAPTURE_SCREENSHOT" &&
-        "area" in message
+        'type' in message &&
+        message.type === 'CAPTURE_SCREENSHOT' &&
+        'area' in message
       ) {
         const captureMessage = message as CaptureMessage;
 
@@ -39,11 +39,11 @@ export default defineBackground({
 
           return true;
         } catch (error) {
-          throw new CaptureError("Screenshot capture failed", error);
+          throw new CaptureError('Screenshot capture failed', error);
         }
       }
 
-      throw new CaptureError("Unknown message type");
+      throw new CaptureError('Unknown message type');
     };
 
     // Register message handler
@@ -54,9 +54,9 @@ export default defineBackground({
       if (!tab.id) return;
 
       try {
-        await browser.tabs.sendMessage(tab.id, { action: "START_SELECTION" });
+        await browser.tabs.sendMessage(tab.id, { action: 'START_SELECTION' });
       } catch (error) {
-        console.error("Failed to start selection:", error);
+        console.error('Failed to start selection:', error);
       }
     });
   },

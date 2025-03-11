@@ -1,10 +1,10 @@
-import React, { useCallback, useRef, useState } from "react";
-import { SelectionArea as SelectionAreaType } from "../../shared/types";
-import { SelectionOverlayProps } from "../../shared/types/components.types";
-import { SelectionArea } from "./SelectionArea";
-import { ControlButtons } from "./ControlButtons";
-import { Instructions } from "./Instructions";
-import { CaptureStatus } from "../../shared/types/screenshot.types";
+import React, { useCallback, useRef, useState } from 'react';
+import { SelectionArea as SelectionAreaType } from '../../shared/types';
+import { SelectionOverlayProps } from '../../shared/types/components.types';
+import { SelectionArea } from './SelectionArea';
+import { ControlButtons } from './ControlButtons';
+import { Instructions } from './Instructions';
+import { CaptureStatus } from '../../shared/types/screenshot.types';
 
 /**
  * Component that renders a dark overlay and allows users to select an area
@@ -16,7 +16,7 @@ export const SelectionOverlay: React.FC<SelectionOverlayProps> = ({
   const [currentSelection, setCurrentSelection] =
     useState<SelectionAreaType | null>(null);
   const [isSelecting, setIsSelecting] = useState(false);
-  const [status, setStatus] = useState<CaptureStatus>("idle");
+  const [status, setStatus] = useState<CaptureStatus>('idle');
   const overlayRef = useRef<HTMLDivElement>(null);
   const selectionStartRef = useRef<{ x: number; y: number } | null>(null);
 
@@ -31,7 +31,7 @@ export const SelectionOverlay: React.FC<SelectionOverlayProps> = ({
 
     selectionStartRef.current = { x, y };
     setIsSelecting(true);
-    setStatus("selecting");
+    setStatus('selecting');
     setCurrentSelection({
       x,
       y,
@@ -69,23 +69,23 @@ export const SelectionOverlay: React.FC<SelectionOverlayProps> = ({
   const handleMouseUp = useCallback(() => {
     if (isSelecting) {
       setIsSelecting(false);
-      setStatus("idle");
+      setStatus('idle');
     }
   }, [isSelecting]);
 
   const handleConfirm = useCallback(() => {
     if (currentSelection) {
-      setStatus("capturing");
+      setStatus('capturing');
       // Hide the overlay background before capture
       const overlayContainer = document.getElementById(
-        "mekane-selection-overlay-container"
+        'mekane-selection-overlay-container'
       );
       if (overlayContainer?.shadowRoot) {
         const background = overlayContainer.shadowRoot.querySelector(
-          ".overlay-background"
+          '.overlay-background'
         );
         if (background instanceof HTMLElement) {
-          background.style.display = "none";
+          background.style.display = 'none';
         }
       }
       // Wait for the next frame to ensure the background is hidden
@@ -98,7 +98,7 @@ export const SelectionOverlay: React.FC<SelectionOverlayProps> = ({
   const handleCancel = useCallback(() => {
     setCurrentSelection(null);
     setIsSelecting(false);
-    setStatus("idle");
+    setStatus('idle');
     onCancel();
   }, [onCancel]);
 

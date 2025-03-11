@@ -1,5 +1,5 @@
-import { SelectionArea } from "../types";
-import { CaptureStatus } from "./screenshot.types";
+import { SelectionArea } from '../types';
+import { CaptureStatus } from './screenshot.types';
 
 export interface SelectionOverlayProps {
   onSelectionComplete: (area: SelectionArea) => void;
