@@ -1,5 +1,6 @@
 import { SelectionArea } from '../types';
 import browser from 'webextension-polyfill';
+import { logger } from './logger.service';
 
 /**
  * Captures a screenshot of the visible tab
@@ -7,7 +8,7 @@ import browser from 'webextension-polyfill';
  */
 export const captureVisibleTab = async (): Promise<string> => {
   try {
-    console.log('[Mekane-Screenshot] Starting capture');
+    logger.log('Starting capture');
 
     // First get the current active tab
     const tabs = await browser.tabs.query({
@@ -15,14 +16,14 @@ export const captureVisibleTab = async (): Promise<string> => {
       currentWindow: true,
     });
 
-    console.log('[Mekane-Screenshot] Found active tab:', tabs[0]?.id);
+    logger.log('Found active tab:', tabs[0]?.id);
 
     if (!tabs[0]?.id) {
       throw new Error('No active tab found');
     }
 
     // Hide the selection area before capture
-    const [hideResult] = await browser.scripting.executeScript({
+    const _hideResult = await browser.scripting.executeScript({
       target: { tabId: tabs[0].id },
       func: () => {
         const overlayContainer = document.getElementById(
@@ -42,7 +43,7 @@ export const captureVisibleTab = async (): Promise<string> => {
     await new Promise((resolve) => setTimeout(resolve, 100));
 
     // Capture the screenshot
-    console.log('[Mekane-Screenshot] Capturing tab');
+    logger.log('Capturing tab');
     const dataUrl = await browser.tabs.captureVisibleTab(undefined, {
       format: 'png',
     });
@@ -64,12 +65,12 @@ export const captureVisibleTab = async (): Promise<string> => {
       },
     });
 
-    console.log('[Mekane-Screenshot] Capture successful');
+    logger.log('Capture successful');
     return dataUrl;
   } catch (error) {
-    console.error('[Mekane-Screenshot] Error capturing screenshot:', error);
+    logger.error('Error capturing screenshot:', error);
     if (error instanceof Error) {
-      console.error('[Mekane-Screenshot] Error details:', {
+      logger.error('Error details:', {
         message: error.message,
         stack: error.stack,
       });
@@ -129,10 +130,7 @@ const getDevicePixelRatio = async (): Promise<number> => {
     const dpr = results[0]?.result;
     return typeof dpr === 'number' ? dpr : 1;
   } catch (error) {
-    console.warn(
-      '[Mekane-Screenshot] Error getting device pixel ratio:',
-      error
-    );
+    logger.warn('Error getting device pixel ratio:', error);
     return 1;
   }
 };
@@ -147,20 +145,20 @@ export const cropScreenshot = async (
   screenshotUrl: string,
   area: SelectionArea
 ): Promise<string> => {
-  console.log('[Mekane-Screenshot] Starting crop');
-  console.log('[Mekane-Screenshot] Area:', area);
+  logger.log('Starting crop');
+  logger.log('Area:', area);
 
   try {
     // Get the device pixel ratio
     const dpr = await getDevicePixelRatio();
-    console.log('[Mekane-Screenshot] Device pixel ratio:', dpr);
+    logger.log('Device pixel ratio:', dpr);
 
     // Convert data URL to blob
     const blob = await dataURLtoBlob(screenshotUrl);
 
     // Create ImageBitmap from blob
     const imageBitmap = await createImageBitmap(blob);
-    console.log('[Mekane-Screenshot] Image loaded, dimensions:', {
+    logger.log('Image loaded, dimensions:', {
       width: imageBitmap.width,
       height: imageBitmap.height,
       dpr,
@@ -172,7 +170,7 @@ export const cropScreenshot = async (
     const width = Math.round(area.width * dpr);
     const height = Math.round(area.height * dpr);
 
-    console.log('[Mekane-Screenshot] Crop dimensions:', {
+    logger.log('Crop dimensions:', {
       left,
       top,
       width,
@@ -207,12 +205,12 @@ export const cropScreenshot = async (
     // Convert blob to data URL
     const croppedDataUrl = await blobToDataURL(croppedBlob);
 
-    console.log('[Mekane-Screenshot] Crop successful');
+    logger.log('Crop successful');
     return croppedDataUrl;
   } catch (error) {
-    console.error('[Mekane-Screenshot] Error cropping screenshot:', error);
+    logger.error('Error cropping screenshot:', error);
     if (error instanceof Error) {
-      console.error('[Mekane-Screenshot] Error details:', {
+      logger.error('Error details:', {
         message: error.message,
         stack: error.stack,
       });
@@ -229,13 +227,13 @@ export const openScreenshotInNewTab = async (
   dataUrl: string
 ): Promise<void> => {
   try {
-    console.log('[Mekane-Screenshot] Opening screenshot in new tab');
+    logger.log('Opening screenshot in new tab');
     await browser.tabs.create({
       url: dataUrl,
     });
-    console.log('[Mekane-Screenshot] Tab created successfully');
+    logger.log('Tab created successfully');
   } catch (error) {
-    console.error('[Mekane-Screenshot] Error opening screenshot:', error);
+    logger.error('Error opening screenshot:', error);
     throw error;
   }
 };

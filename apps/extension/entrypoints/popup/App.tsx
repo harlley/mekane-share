@@ -1,6 +1,7 @@
 import React from 'react';
 import browser from 'webextension-polyfill';
 import './App.css';
+import { logger } from '../shared/services/logger.service';
 
 const App: React.FC = () => {
   const handleCaptureClick = async () => {
@@ -21,9 +22,13 @@ const App: React.FC = () => {
         });
       }
     } catch (error) {
-      console.error('Error initiating screen capture:', error);
+      if (error instanceof Error) {
+        logger.error('Error in popup:', error.message);
+      }
     }
   };
+
+  logger.log('Popup loaded');
 
   return (
     <div className="app-container">

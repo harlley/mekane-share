@@ -8,7 +8,8 @@ export interface SelectionOverlayProps {
 
 export interface SelectionAreaProps {
   area: SelectionArea | null;
-  isSelecting: boolean;
+  _isSelecting: boolean;
+  onSelectionComplete: (area: SelectionArea) => void;
 }
 
 export interface ControlButtonsProps {

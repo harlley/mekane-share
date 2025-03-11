@@ -1,22 +1,35 @@
-import React from 'react';
-import { SelectionAreaProps } from '../../shared/types/components.types';
+import React from "react";
+import { SelectionArea as SelectionAreaType } from "../../shared/types";
+
+interface SelectionAreaProps {
+  area: SelectionAreaType | null;
+  _isSelecting: boolean;
+  onSelectionComplete: (area: SelectionAreaType) => void;
+}
 
 export const SelectionArea: React.FC<SelectionAreaProps> = ({
   area,
-  isSelecting,
+  _isSelecting,
+  onSelectionComplete,
 }) => {
   if (!area) return null;
+
+  const handleClick = () => {
+    onSelectionComplete(area);
+  };
 
   return (
     <div
       className="selection-area"
       style={{
-        position: 'fixed',
-        left: `${area.x}px`,
-        top: `${area.y}px`,
-        width: `${area.width}px`,
-        height: `${area.height}px`,
+        position: "fixed",
+        left: area.x,
+        top: area.y,
+        width: area.width,
+        height: area.height,
+        cursor: "pointer",
       }}
+      onClick={handleClick}
     />
   );
 };
