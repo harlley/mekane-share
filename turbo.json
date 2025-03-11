@@ -17,6 +17,10 @@
       ]
     },
     "lint": {},
+    "typecheck": {
+      "outputs": [],
+      "cache": true
+    },
     "dev": {
       "cache": false,
       "persistent": true,
