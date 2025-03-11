@@ -1,5 +1,5 @@
-import React from "react";
-import { SelectionArea as SelectionAreaType } from "../../shared/types";
+import React from 'react';
+import { SelectionArea as SelectionAreaType } from '../../shared/types';
 
 interface SelectionAreaProps {
   area: SelectionAreaType | null;
@@ -22,12 +22,12 @@ export const SelectionArea: React.FC<SelectionAreaProps> = ({
     <div
       className="selection-area"
       style={{
-        position: "fixed",
+        position: 'fixed',
         left: area.x,
         top: area.y,
         width: area.width,
         height: area.height,
-        cursor: "pointer",
+        cursor: 'pointer',
       }}
       onClick={handleClick}
     />
