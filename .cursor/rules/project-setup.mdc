@@ -46,11 +46,13 @@ code_conventions:
   - rule: "React components should be functional with hooks"
   - rule: "Backend uses Hono for routing and middleware"
   - rule: "Follow existing file structure in respective directories"
+  - rule: "Always run 'npm run lint' before committing changes"
 
 ## Version Control Rules
 version_control:
   - rule: "Never commit and push without explicit user request"
   - rule: "Always wait for user confirmation before any git operations"
+  - rule: "Run linting before commits to ensure code quality"
 
 ## API Endpoints
 endpoints:
