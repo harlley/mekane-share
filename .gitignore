@@ -1,3 +1,5 @@
 node_modules
 .turbo
 packages/shared/dist
+apps/extension/test-results
+apps/extension/playwright-report
