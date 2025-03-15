@@ -2,7 +2,7 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "backend",
   "main": "src/index.ts",
-  "compatibility_date": "2025-03-08"
+  "compatibility_date": "2025-03-08",
   // "compatibility_flags": [
   //   "nodejs_compat"
   // ],
@@ -15,12 +15,13 @@
   //     "id": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
   //   }
   // ],
-  // "r2_buckets": [
-  //   {
-  //     "binding": "MY_BUCKET",
-  //     "bucket_name": "my-bucket"
-  //   }
-  // ],
+  "r2_buckets": [
+    {
+      "binding": "SCREENSHOTS_BUCKET",
+      "bucket_name": "mekane-share",
+      "preview_bucket_name": "mekane-share-dev",
+    },
+  ],
   // "d1_databases": [
   //   {
   //     "binding": "MY_DB",

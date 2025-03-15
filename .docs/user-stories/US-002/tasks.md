@@ -1,10 +1,11 @@
 # Work Plan for US-002: Screenshot Upload and Storage
 
 ## 1. Analysis and Preparation
-- [ ] 1.1. Cloudflare R2 Configuration
-  - [ ] 1.1.1. Create R2 bucket in Cloudflare
-  - [ ] 1.1.2. Obtain bucket access credentials
-  - [ ] 1.1.3. Update `wrangler.jsonc` file to include R2 bucket configuration
+- [x] 1.1. Cloudflare R2 Configuration
+  - [x] 1.1.1. Create R2 bucket in Cloudflare
+  - [x] 1.1.2. Obtain bucket access credentials
+  - [x] 1.1.3. Update `wrangler.jsonc` file to include R2 bucket configuration
+  - [x] 1.1.4. Set up .env file and test the connection with R2
 
 - [ ] 1.2. Type Definitions
   - [ ] 1.2.1. Create interface for upload request

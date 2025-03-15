@@ -3,3 +3,4 @@ node_modules
 packages/shared/dist
 apps/extension/test-results
 apps/extension/playwright-report
+.env
