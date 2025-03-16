@@ -6,7 +6,7 @@ A browser extension for capturing, annotating, and sharing screenshots with ease
 
 **Version: 0.0.1-alpha (In Development)**
 
-This project is an experimental learning initiative to explore AI-assisted software development using professional practices and standards. I'm using this project to learn how to develop software with the assistance of AI agents while maintaining professional development workflows, code quality, and project management.
+This project is an experimental learning initiative to explore AI-driven software development using professional practices and standards. I'm using this project to learn how to develop software with AI-driven approaches while maintaining professional development workflows, code quality, and project management.
 
 ## Project Overview
 
@@ -79,13 +79,13 @@ npm run build
 
 ## Contributing
 
-Contributions are welcome! This is an experimental project focused on learning AI-assisted development, so feel free to join in and experiment with me.
+Contributions are welcome! This is an experimental project focused on learning AI-driven development, so feel free to join in and experiment with me.
 
 Please check the CONTRIBUTING.md file for guidelines.
 
-## AI-Assisted Professional Development
+## AI-Driven Professional Development
 
-This project serves as a case study for AI-assisted professional software development. I'm documenting my experience using AI tools and agents to help with:
+This project serves as a case study for AI-driven professional software development. I'm documenting my experience using AI tools and agents to help with:
 
 - Code generation and refactoring
 - Problem-solving and debugging
@@ -96,9 +96,9 @@ This project serves as a case study for AI-assisted professional software develo
 - CI/CD implementation
 - Project management
 
-The goal is to demonstrate how AI assistance can be integrated into professional software development processes while maintaining high standards of quality, maintainability, and scalability.
+The goal is to demonstrate how AI-driven approaches can be integrated into professional software development processes while maintaining high standards of quality, maintainability, and scalability.
 
-Feel free to explore the codebase and see how AI assistance has shaped its development while adhering to professional standards.
+Feel free to explore the codebase and see how AI-driven development has shaped its evolution while adhering to professional standards.
 
 ## License
 
