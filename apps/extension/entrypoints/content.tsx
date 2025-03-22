@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom/client';
 import { SelectionOverlay } from './content/components/SelectionOverlay';
 import { SelectionArea, CaptureMessage } from './shared/types';
 import browser from 'webextension-polyfill';
-import { logger } from './shared/services/logger.service';
+import { logger } from './shared/services/logger';
 
 // CSS styles
 const overlayStyles = `

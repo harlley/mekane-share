@@ -1,17 +1,32 @@
 import { defineConfig } from 'wxt';
 
+// Default to localhost for development if not specified
+const DEFAULT_SERVER_URL =
+  process.env.WXT_SERVER_URL || 'http://localhost:8787';
+
 // See https://wxt.dev/api/config.html
 export default defineConfig({
-  extensionApi: 'chrome',
-  manifest: {
+  manifest: () => ({
     name: 'Mekane Share',
-    description: 'Take and share screenshot of selected areas',
-    permissions: ['activeTab', 'tabs', 'scripting', 'desktopCapture'],
-    host_permissions: ['<all_urls>'],
+    description: 'Screenshot sharing extension',
+    permissions: [
+      'activeTab',
+      'tabs',
+      'scripting',
+      'desktopCapture',
+      'notifications',
+      'clipboardWrite',
+      'storage',
+    ],
+    host_permissions: ['<all_urls>', `${DEFAULT_SERVER_URL}/*`],
     background: {
-      service_worker: 'background.ts',
+      service_worker: './entrypoints/background.ts',
       type: 'module',
     },
-  },
-  modules: ['@wxt-dev/module-react'],
+  }),
+  vite: () => ({
+    define: {
+      'import.meta.env.SERVER_URL': JSON.stringify(DEFAULT_SERVER_URL),
+    },
+  }),
 });

@@ -19,7 +19,7 @@
     {
       "binding": "SCREENSHOTS_BUCKET",
       "bucket_name": "mekane-share",
-      "preview_bucket_name": "mekane-share-dev",
+      "preview_bucket_name": "mekane-share",
     },
   ],
   // "d1_databases": [

@@ -1,6 +1,6 @@
 import { SelectionArea } from '../types';
 import browser from 'webextension-polyfill';
-import { logger } from './logger.service';
+import { logger } from './logger';
 
 /**
  * Captures a screenshot of the visible tab

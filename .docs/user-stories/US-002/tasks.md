@@ -7,10 +7,10 @@
   - [x] 1.1.3. Update `wrangler.jsonc` file to include R2 bucket configuration
   - [x] 1.1.4. Set up .env file and test the connection with R2
 
-- [ ] 1.2. Type Definitions
-  - [ ] 1.2.1. Create interface for upload request
-  - [ ] 1.2.2. Create interface for upload response
-  - [ ] 1.2.3. Define types for errors and validations
+- [x] 1.2. Type Definitions
+  - [x] 1.2.1. Create interface for upload request
+  - [x] 1.2.2. Create interface for upload response
+  - [x] 1.2.3. Define types for errors and validations
 
 ## 2. Unit Tests Implementation
 - [ ] 2.1. Test Environment Setup
@@ -28,28 +28,28 @@
   - [ ] 2.2.7. Test for error handling (storage failure)
 
 ## 3. Endpoint Implementation
-- [ ] 3.1. Directory Structure Creation
-  - [ ] 3.1.1. Create `routes` directory if it doesn't exist
-  - [ ] 3.1.2. Create `upload.ts` file for the upload endpoint
-  - [ ] 3.1.3. Create `services` directory for business logic
+- [x] 3.1. Directory Structure Creation
+  - [x] 3.1.1. Create `routes` directory if it doesn't exist
+  - [x] 3.1.2. Create `upload.ts` file for the upload endpoint
+  - [x] 3.1.3. Create `services` directory for business logic
 
-- [ ] 3.2. Upload Service Implementation
-  - [ ] 3.2.1. Implement function for file format validation
-  - [ ] 3.2.2. Implement function for unique ID generation
-  - [ ] 3.2.3. Implement function for R2 storage
-  - [ ] 3.2.4. Implement function for public URL generation
+- [x] 3.2. Upload Service Implementation
+  - [x] 3.2.1. Implement function for file format validation
+  - [x] 3.2.2. Implement function for unique ID generation
+  - [x] 3.2.3. Implement function for R2 storage
+  - [x] 3.2.4. Implement function for public URL generation
 
-- [ ] 3.3. Endpoint Implementation
-  - [ ] 3.3.1. Implement POST `/upload` route
-  - [ ] 3.3.2. Implement middleware for multipart/form-data processing
-  - [ ] 3.3.3. Implement request validation
-  - [ ] 3.3.4. Implement upload service call
-  - [ ] 3.3.5. Implement response return
-  - [ ] 3.3.6. Implement error handling
+- [x] 3.3. Endpoint Implementation
+  - [x] 3.3.1. Implement POST `/upload` route
+  - [x] 3.3.2. Implement middleware for multipart/form-data processing
+  - [x] 3.3.3. Implement request validation
+  - [x] 3.3.4. Implement upload service call
+  - [x] 3.3.5. Implement response return
+  - [x] 3.3.6. Implement error handling
 
-- [ ] 3.4. Integration with Main App
-  - [ ] 3.4.1. Register the endpoint in the main app (index.ts)
-  - [ ] 3.4.2. Configure global middleware if necessary
+- [x] 3.4. Integration with Main App
+  - [x] 3.4.1. Register the endpoint in the main app (index.ts)
+  - [x] 3.4.2. Configure global middleware if necessary
 
 ## 4. Integration Tests
 - [ ] 4.1. Integration Test Environment Setup
@@ -66,7 +66,7 @@
 - [ ] 5.1. Technical Documentation Update
   - [ ] 5.1.1. Document the upload endpoint (parameters, responses, errors)
   - [ ] 5.1.2. Document the R2 configuration process
-  - [ ] 5.1.3. Update README with usage instructions
+  - [x] 5.1.3. Update README with usage instructions
 
 - [ ] 5.2. Developer Documentation
   - [ ] 5.2.1. Create examples of endpoint usage

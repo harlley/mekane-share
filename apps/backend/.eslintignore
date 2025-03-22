@@ -1,0 +1,4 @@
+# Ignore scripts directory
+scripts/**/*
+node_modules
+dist 
