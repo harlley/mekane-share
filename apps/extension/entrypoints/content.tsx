@@ -44,7 +44,7 @@ const overlayStyles = `
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  gap: 10px;
+  gap: 8px;
   z-index: 2147483648;
 }
 
@@ -64,36 +64,43 @@ const overlayStyles = `
 `;
 
 const buttonStyles = `
-.selection-controls button {
-  all: initial;
-  font-family: system-ui, -apple-system, sans-serif;
-  display: inline-block;
-  padding: 8px 16px;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  font-size: 14px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-  pointer-events: auto;
-  user-select: none;
+.selection-controls {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
   z-index: 2147483648;
 }
 
-.selection-controls .capture-button {
-  background-color: #3498db;
+.control-button {
+  all: initial;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 4px;
+  background: #1a1a1a;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.9);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 14px;
+  transition: all 0.2s ease;
 }
 
-.selection-controls .capture-button:hover {
-  background-color: #2980b9;
+.control-button:hover {
+  background: #2a2a2a;
 }
 
-.selection-controls .cancel-button {
-  background-color: #e74c3c;
+.control-button svg {
+  width: 20px;
+  height: 20px;
 }
 
-.selection-controls .cancel-button:hover {
-  background-color: #c0392b;
+.control-button span {
+  user-select: none;
 }
 `;
 

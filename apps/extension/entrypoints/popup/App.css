@@ -42,12 +42,8 @@
 }
 
 .app-container {
-  width: 320px;
-  min-height: 250px;
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  padding: 8px;
+  background: #1a1a1a;
 }
 
 header {
@@ -109,27 +105,25 @@ main {
 
 /* Capture button */
 .capture-button {
-  background-color: #3498db;
-  color: white;
+  background: transparent;
   border: none;
-  border-radius: 4px;
-  padding: 12px 24px;
-  font-size: 16px;
-  font-weight: 500;
+  padding: 8px;
   cursor: pointer;
-  transition: background-color 0.2s;
-  width: 100%;
-  max-width: 240px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
 }
 
 .capture-button:hover {
-  background-color: #2980b9;
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.1);
 }
 
-.capture-button:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.5);
+.capture-button svg {
+  width: 20px;
+  height: 20px;
 }
 
 .instruction {
@@ -260,4 +254,29 @@ footer {
 
 footer p {
   margin: 0;
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #2a2a2a;
+  border-radius: 4px;
+  padding: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.server-url-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-size: 14px;
+  padding: 4px 8px;
+  width: 100%;
+  outline: none;
+}
+
+.server-url-input::placeholder {
+  color: rgba(255, 255, 255, 0.3);
 }
