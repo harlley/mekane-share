@@ -4,7 +4,7 @@ A browser extension for capturing, annotating, and sharing screenshots with ease
 
 ## Demo
 
-<video src="docs/mekane-share.mp4" width="100%" controls autoplay loop muted />
+https://github.com/harlley/mekane-share/assets/docs/mekane-share.mp4?raw=true
 
 ## Project Status
 
