@@ -10,7 +10,8 @@
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "postinstall": "[ -f \"$NVM_DIR/nvm.sh\" ] && . \"$NVM_DIR/nvm.sh\" && nvm use || echo \"nvm not found\"",
-    "typecheck": "turbo run typecheck"
+    "typecheck": "turbo run typecheck",
+    "storybook": "npm run storybook --workspace=apps/extension"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^7.1.0",
