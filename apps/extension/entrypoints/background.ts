@@ -200,18 +200,7 @@ export default defineBackground({
       throw new CaptureError('Unknown message type');
     };
 
-    // Register message handler
+    // Listen for messages from content script
     browser.runtime.onMessage.addListener(messageHandler);
-
-    // Listen for browser action click
-    browser.action.onClicked.addListener(async (tab: browser.Tabs.Tab) => {
-      if (!tab.id) return;
-
-      try {
-        await browser.tabs.sendMessage(tab.id, { action: 'START_SELECTION' });
-      } catch (error) {
-        logger.error('Failed to start selection:', error);
-      }
-    });
   },
 });

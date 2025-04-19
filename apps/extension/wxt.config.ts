@@ -9,6 +9,7 @@ export default defineConfig({
   manifest: () => ({
     name: 'Mekane Share',
     description: 'Screenshot sharing extension',
+    manifest_version: 3,
     permissions: [
       'activeTab',
       'tabs',
@@ -20,9 +21,16 @@ export default defineConfig({
     ],
     host_permissions: ['<all_urls>', `${DEFAULT_SERVER_URL}/*`],
     background: {
-      service_worker: './entrypoints/background.ts',
+      service_worker: 'background.js',
       type: 'module',
     },
+    content_scripts: [
+      {
+        matches: ['<all_urls>'],
+        js: ['content-scripts/content.js'],
+        run_at: 'document_idle',
+      },
+    ],
   }),
   vite: () => ({
     define: {

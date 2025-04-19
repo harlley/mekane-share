@@ -1,10 +1,14 @@
 import { defineContentScript } from 'wxt/sandbox';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import { SelectionOverlay } from './content/components/SelectionOverlay';
 import { SelectionArea, CaptureMessage } from './shared/types';
 import browser from 'webextension-polyfill';
 import { logger } from './shared/services/logger';
+import {
+  getServerBaseUrl,
+  updateServerBaseUrl,
+} from './shared/services/settings';
 
 // CSS styles
 const overlayStyles = `
@@ -104,6 +108,102 @@ const buttonStyles = `
 }
 `;
 
+const fabStyles = `
+.mekane-fab-container {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  z-index: 2147483649;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #1a1a1a;
+  border-radius: 28px;
+  padding: 4px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mekane-fab-container.collapsed {
+  width: 56px;
+  overflow: hidden;
+}
+
+.mekane-fab-container.expanded {
+  width: auto;
+  min-width: 320px;
+  padding-left: 12px;
+}
+
+.mekane-fab-toggle {
+  background: #3498db;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.2s;
+}
+
+.mekane-fab-toggle:hover {
+  background: #2980b9;
+}
+
+.mekane-fab-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  overflow: hidden;
+  opacity: 0;
+  width: 0;
+  transition: all 0.3s ease;
+}
+
+.expanded .mekane-fab-content {
+  opacity: 1;
+  width: auto;
+}
+
+.mekane-fab-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-size: 14px;
+  padding: 8px;
+  min-width: 200px;
+  outline: none;
+}
+
+.mekane-fab-input::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.mekane-fab-capture {
+  background: transparent;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+}
+
+.mekane-fab-capture:hover {
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.1);
+}
+`;
+
 export default defineContentScript({
   matches: ['<all_urls>'],
   main() {
@@ -121,6 +221,7 @@ export default defineContentScript({
       }
     );
     logger.log('Content script loaded');
+    injectFAB();
   },
 });
 
@@ -260,4 +361,103 @@ const removeOverlay = () => {
       logger.error('Error removing overlay:', error.message);
     }
   }
+};
+
+function injectFAB() {
+  if (document.getElementById('mekane-fab-container')) return;
+  const fabContainer = document.createElement('div');
+  fabContainer.id = 'mekane-fab-container';
+  document.body.appendChild(fabContainer);
+  const shadow = fabContainer.attachShadow({ mode: 'open' });
+  const style = document.createElement('style');
+  style.textContent = fabStyles;
+  shadow.appendChild(style);
+  const reactDiv = document.createElement('div');
+  shadow.appendChild(reactDiv);
+  ReactDOM.createRoot(reactDiv).render(<InlineFAB />);
+}
+
+const InlineFAB: React.FC = () => {
+  const [expanded, setExpanded] = useState(false);
+  const [serverBaseUrl, setServerBaseUrl] = useState('');
+
+  useEffect(() => {
+    const loadSettings = async () => {
+      const url = await getServerBaseUrl();
+      setServerBaseUrl(url);
+    };
+    loadSettings();
+  }, []);
+
+  const handleUrlChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newUrl = e.target.value;
+    setServerBaseUrl(newUrl);
+    await updateServerBaseUrl(newUrl);
+  };
+
+  const handleCaptureClick = async () => {
+    try {
+      injectSelectionOverlay();
+      setExpanded(false);
+    } catch (error) {
+      if (error instanceof Error) {
+        logger.error('Error in FAB:', error.message);
+      }
+    }
+  };
+
+  return (
+    <div
+      className={`mekane-fab-container ${expanded ? 'expanded' : 'collapsed'}`}
+    >
+      <button
+        className="mekane-fab-toggle"
+        title={expanded ? 'Collapse' : 'Open Mekane Share'}
+        onClick={() => setExpanded(!expanded)}
+      >
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          {expanded ? (
+            <path
+              d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+              fill="currentColor"
+            />
+          ) : (
+            <path
+              d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+              fill="currentColor"
+            />
+          )}
+        </svg>
+      </button>
+      <div className="mekane-fab-content">
+        <input
+          type="text"
+          value={serverBaseUrl}
+          onChange={handleUrlChange}
+          placeholder="http://localhost:8787"
+          className="mekane-fab-input"
+        />
+        <button className="mekane-fab-capture" onClick={handleCaptureClick}>
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M12 15.2C13.7673 15.2 15.2 13.7673 15.2 12C15.2 10.2327 13.7673 8.8 12 8.8C10.2327 8.8 8.8 10.2327 8.8 12C8.8 13.7673 10.2327 15.2 12 15.2Z"
+              fill="currentColor"
+            />
+            <path
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M9 3C8.73478 3 8.48043 3.10536 8.29289 3.29289L7 4.58579C6.81246 4.77332 6.55811 4.87868 6.29289 4.87868H5C3.89543 4.87868 3 5.77411 3 6.87868V18C3 19.1046 3.89543 20 5 20H19C20.1046 20 21 19.1046 21 18V6.87868C21 5.77411 20.1046 4.87868 19 4.87868H17.7071C17.4419 4.87868 17.1875 4.77332 17 4.58579L15.7071 3.29289C15.5196 3.10536 15.2652 3 15 3H9ZM12 16.5C14.4853 16.5 16.5 14.4853 16.5 12C16.5 9.51472 14.4853 7.5 12 7.5C9.51472 7.5 7.5 9.51472 7.5 12C7.5 14.4853 9.51472 16.5 12 16.5Z"
+              fill="currentColor"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+  );
 };

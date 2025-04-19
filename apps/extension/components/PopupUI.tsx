@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import browser from 'webextension-polyfill';
-import './App.css';
-import { logger } from '../shared/services/logger';
+// import '../entrypoints/popup/App.css';
+import { logger } from '../entrypoints/shared/services/logger';
 import {
   getServerBaseUrl,
   updateServerBaseUrl,
-} from '../shared/services/settings';
+} from '../entrypoints/shared/services/settings';
 
-const App: React.FC = () => {
+interface PopupUIProps {
+  onClose?: () => void;
+}
+
+const PopupUI: React.FC<PopupUIProps> = ({ onClose }) => {
   const [serverBaseUrl, setServerBaseUrl] = useState<string>('');
 
   useEffect(() => {
@@ -27,25 +31,13 @@ const App: React.FC = () => {
   };
 
   const handleCaptureClick = async () => {
-    // Close the popup
-    window.close();
-
+    if (onClose) onClose();
     try {
       // Send message to background script to start the capture process
-      const tabs = await browser.tabs.query({
-        active: true,
-        currentWindow: true,
-      });
-      const currentTab = tabs[0];
-
-      if (currentTab.id) {
-        await browser.tabs.sendMessage(currentTab.id, {
-          action: 'START_SELECTION',
-        });
-      }
+      await browser.runtime.sendMessage({ action: 'START_SELECTION' });
     } catch (error) {
       if (error instanceof Error) {
-        logger.error('Error in popup:', error.message);
+        logger.error('Error in FAB modal:', error.message);
       }
     }
   };
@@ -85,4 +77,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+export default PopupUI;
