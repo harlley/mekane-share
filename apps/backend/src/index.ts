@@ -2,7 +2,7 @@ import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { logger as honoLogger } from 'hono/logger';
 import { prettyJSON } from 'hono/pretty-json';
-import { R2Bucket } from '@cloudflare/workers-types';
+import { R2Bucket, RateLimitNamespace } from '@cloudflare/workers-types';
 import { health } from './routes/health';
 import { upload } from './routes/upload';
 import { logger } from './services/logger';
@@ -11,6 +11,7 @@ import { logger } from './services/logger';
 interface Env {
   SCREENSHOTS_BUCKET: R2Bucket;
   PUBLIC_URL?: string;
+  API_RATE_LIMITER: RateLimitNamespace; // Added this line
 }
 
 // Create the main app
@@ -19,6 +20,37 @@ const app = new Hono<{ Bindings: Env }>();
 // Apply global middleware
 app.use('*', honoLogger());
 app.use('*', prettyJSON());
+
+// Rate Limiting Middleware
+app.use('*', async (c, next) => {
+  if (!c.env.API_RATE_LIMITER) {
+    console.error("Rate limiter binding API_RATE_LIMITER not found. Skipping rate limit.");
+    await next();
+    return;
+  }
+  try {
+    // Use a consistent key for rate limiting, e.g., client's IP address
+    // Using c.req.path might be too granular and could be easily bypassed
+    // For this example, let's use a placeholder for the client identifier
+    // In a real application, you'd use something like c.req.header('CF-Connecting-IP')
+    // const clientKey = c.req.header('CF-Connecting-IP') || c.req.header('X-Forwarded-For') || c.req.path;
+    const { success } = await c.env.API_RATE_LIMITER.limit({ key: c.req.path });
+    if (!success) {
+      return c.json(
+        {
+          error: "Too Many Requests",
+          message: "You have exceeded the request limit."
+        },
+        429
+      );
+    }
+  } catch (error) {
+    console.error("Error during rate limiting:", error);
+    // Allow request to proceed if there's an error with the limiter itself
+  }
+  await next();
+});
+
 app.use(
   '*',
   cors({
